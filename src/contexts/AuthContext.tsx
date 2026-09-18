@@ -17,8 +17,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       user,
-      login: async ({ phone, otp, role, name, language }) => {
-        const profile = await authService.verifyOtp(phone, otp, role, name, language);
+      login: async (payload: { phone: string; otp: string; role: UserRole; name: string; language?: string }) => {
+        const profile = await authService.verifyOtp(
+          payload.phone,
+          payload.otp,
+          payload.role,
+          payload.name,
+          payload.language,
+        );
         setUser(profile);
       },
       logout: () => {
